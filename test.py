@@ -1,5 +1,3 @@
-
-
 def first_repeat_of_a_char(haystack):
     found = []
     for straw in haystack:
