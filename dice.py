@@ -1,16 +1,15 @@
 from random import randint
 
 
-class Dice:
-
+class Dice():
     def __init__(self, sides=6):
         self.sides = int(sides)
-        self.rolled = None
+        self.__rolled = 0
+
+    @property
+    def rolled(self):
+        return self.__rolled
 
     def roll(self):
-        self.rolled = randint(1, self.sides)
-        return self.rolled
-
-    def __str__(self):
-        return str(self.rolled)
-
+        self.__rolled = randint(1, self.sides)
+        return self.__rolled
