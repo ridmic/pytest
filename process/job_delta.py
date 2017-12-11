@@ -25,9 +25,11 @@ def get_delta_job(from_date, to_date):
     return json.dumps(body)
 
 
-print("Connecting to server...")
+# Load our application config
 config = JobConfig()
-connection = Connection(config.getAqmpHost())
+
+print("Connecting to server...")
+connection = Connection(config.aqmp_host())
 print("Generating Payload...")
 job = DeltaQueueSender(connection)
 payload = get_delta_job('2017-12-01', '2017-12-31')

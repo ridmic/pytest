@@ -2,7 +2,9 @@ from configobj import ConfigObj, flatten_errors
 from validate import Validator
 
 
-class JobConfig():
+class JobConfig:
+    """ This class ensures we can control access to our config file """
+
     def __init__(self, ini_file='application.ini',spec_file='application_spec.ini'):
         self.__config = None
         self.__config = ConfigObj(ini_file, configspec=spec_file)
@@ -15,10 +17,10 @@ class JobConfig():
             # Create an empty settings if our config is invalid
             self.__config = None
 
-    def getAqmpHost(self, default=None):
+    def aqmp_host(self, default=None):
         if self.__config is not None:
-            section = self.__config['hosts']
-            return section.get('amqp_host', default)
+            c_section = self.__config['hosts']
+            return c_section.get('amqp_host', default)
         return default
 
 

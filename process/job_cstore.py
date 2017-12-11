@@ -1,5 +1,6 @@
 from process.amqp_connection import Connection
 from process.amqp_receiver import Worker
+from process.job_config import JobConfig
 import json
 
 server_url = 'amqp://azyejlhd:jKYvB_Zd6_NHwvp9s7BzU86hThCdTT8R@spider.rmq.cloudamqp.com/azyejlhd'
@@ -15,7 +16,7 @@ class CStoreQueueReceiver(Worker):
         print(" [x] CStore Queue Received %r" % body)
         payload = json.loads(str(body.decode('utf8')))
 
-        print(" [x] Procesing CS Job {}".format(payload['job_id']))
+        print(" [x] Processing CS Job {}".format(payload['job_id']))
 
         print(" [x] Product ID: {}".format(payload['product_id']))
         print(" [x] Product CS Data: {}".format(payload['product_data']))
@@ -28,10 +29,11 @@ class CStoreQueueReceiver(Worker):
         ch.basic_ack(delivery_tag=method.delivery_tag)
 
 
-conn = Connection(server_url)
-job = CStoreQueueReceiver(conn)
-try:
-    job.consume()
-except KeyboardInterrupt:
-    job.channel.stop_consuming()
-    print('Worker loop terminated by Ctrl-C')
+# Load our application config
+config = JobConfig()
+
+print("Connecting to server...")
+connection = Connection(config.aqmp_host())
+print("Generating Listener...")
+job = CStoreQueueReceiver(connection)
+job.consume()

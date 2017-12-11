@@ -9,7 +9,12 @@ class Receiver(Queue):
         self.channel.basic_consume(self.callback, queue=self.queue_name, no_ack=True)
 
     def consume(self):
-        self.channel.start_consuming()
+        try:
+            print(" [x] Entering consume loop...")
+            self.channel.start_consuming()
+        except KeyboardInterrupt:
+            self.channel.stop_consuming()
+            print(' [x] Worker loop terminated by Ctrl-C')
 
     def callback(self, ch, method, properties, body):
         print(" [x] Received %r" % body)
@@ -23,7 +28,12 @@ class Worker(Queue):
         self.channel.basic_consume(self.callback, queue=self.queue_name)
 
     def consume(self):
-        self.channel.start_consuming()
+        try:
+            print(" [x] Entering consume loop...")
+            self.channel.start_consuming()
+        except KeyboardInterrupt:
+            self.channel.stop_consuming()
+            print(' [x] Worker loop terminated by Ctrl-C')
 
     def callback(self, ch, method, properties, body):
         print(" [x] Received %r" % body)
@@ -38,7 +48,12 @@ class Subscriber(SubscriberQueue):
         self.channel.basic_consume(self.callback, queue=self.queue_name, no_ack=True)
 
     def consume(self):
-        self.channel.start_consuming()
+        try:
+            print(" [x] Entering consume loop...")
+            self.channel.start_consuming()
+        except KeyboardInterrupt:
+            self.channel.stop_consuming()
+            print(' [x] Worker loop terminated by Ctrl-C')
 
     def callback(self, ch, method, properties, body):
         print(" [x] Subscriber Received %r" % body)

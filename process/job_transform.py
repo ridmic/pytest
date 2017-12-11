@@ -1,6 +1,7 @@
 from process.amqp_connection import Connection
 from process.amqp_sender import Publisher
 from process.amqp_receiver import Worker
+from process.job_config import JobConfig
 import json
 
 server_url = 'amqp://azyejlhd:jKYvB_Zd6_NHwvp9s7BzU86hThCdTT8R@spider.rmq.cloudamqp.com/azyejlhd'
@@ -16,7 +17,7 @@ class TransformQueueReceiver(Worker):
         print(" [x] Transform Queue Received %r" % body)
         payload = json.loads(str(body.decode('utf8')))
 
-        print(" [x] Procesing Job {}".format(payload['job_id']))
+        print(" [x] Processing Job {}".format(payload['job_id']))
 
         item = payload['product_id']
         job_id = payload['job_id']
@@ -60,10 +61,11 @@ class WStoreQueueSender(Publisher):
         Publisher.__init__(self, conn, self.queue_name)
 
 
-conn = Connection(server_url)
-job = TransformQueueReceiver(conn)
-try:
-    job.consume()
-except KeyboardInterrupt:
-    job.channel.stop_consuming()
-    print('Worker loop terminated by Ctrl-C')
+# Load our application config
+config = JobConfig()
+
+print("Connecting to server...")
+connection = Connection(config.aqmp_host())
+print("Generating Listener...")
+job = TransformQueueReceiver(connection)
+job.consume()
