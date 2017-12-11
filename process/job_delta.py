@@ -3,8 +3,6 @@ from process.amqp_sender import Publisher
 from process.job_config import JobConfig
 import json
 
-server_url = 'amqp://azyejlhd:jKYvB_Zd6_NHwvp9s7BzU86hThCdTT8R@spider.rmq.cloudamqp.com/azyejlhd'
-
 
 class DeltaQueueSender(Publisher):
     def __init__(self, conn):

@@ -4,8 +4,6 @@ from process.amqp_receiver import Worker
 from process.job_config import JobConfig
 import json
 
-server_url = 'amqp://azyejlhd:jKYvB_Zd6_NHwvp9s7BzU86hThCdTT8R@spider.rmq.cloudamqp.com/azyejlhd'
-
 
 class ProductQueueReceiver(Worker):
     def __init__(self, conn):
