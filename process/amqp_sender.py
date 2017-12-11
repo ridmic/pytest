@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-import pika
-from amqp_queue import Queue
+from process.amqp_queue import Queue
 
 
 class Sender(Queue):

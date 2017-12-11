@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-import pika
-from amqp_connection import Connection
+from process.amqp_connection import Connection
 
 
 class Queue:

@@ -1,10 +1,8 @@
 #!/usr/bin/env python
-import pika
-from amqp_queue import Queue
-from amqp_queue import SubscriberQueue
+from process.amqp_queue import Queue, SubscriberQueue
 
 
-class Reciever(Queue):
+class Receiver(Queue):
     def __init__(self, queue_conn, queue_name):
         Queue.__init__(self, queue_conn, queue_name, '', queue_name)
 

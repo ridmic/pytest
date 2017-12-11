@@ -1,6 +1,6 @@
-from amqp_connection import Connection
-from amqp_sender import Publisher
-from amqp_reciever import Worker
+from process.amqp_connection import Connection
+from process.amqp_sender import Publisher
+from process.amqp_receiver import Worker
 import json
 
 server_url = 'amqp://azyejlhd:jKYvB_Zd6_NHwvp9s7BzU86hThCdTT8R@spider.rmq.cloudamqp.com/azyejlhd'

@@ -4,6 +4,7 @@ import pika
 
 class Connection:
     def __init__(self, server_url):
+        self.__connection = None
         params = pika.URLParameters(server_url)
         params.socket_timeout = 5
         self.__connection = pika.BlockingConnection(params)
